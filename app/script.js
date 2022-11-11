@@ -12,20 +12,37 @@ const App = () => {
 
   const startTimer = () => {
     setStatus('work')
-    setTime(2)
+    setTime(1200)
     setTimer(setInterval(() => {
       setTime(time => time - 1);
     }, 1000));
   }
 
+  const stopTimer = () => {
+    setStatus('off')
+    setTime(null)
+    setTimer(null)
+  }
+
+  const closeApp = () => {
+    window.close()
+  }
+
+  const playBell = () => {
+    const audioElement = new Audio('./sounds/bell.wav');
+    audioElement.play();
+  }
+
   useEffect(() => {
     if(time === 0){
       if(status === 'work'){
+        playBell()
         setStatus('rest')
-        setTime(2)
+        setTime(20)
       } else {
+        playBell()
         setStatus('work')
-        setTime(2)
+        setTime(1200)
       }
     }
   })
@@ -47,8 +64,8 @@ const App = () => {
         </div>
       )}
       { status === 'off' && (<button className="btn" onClick={startTimer}>Start</button>)}
-      { status !== 'off' && (<button className="btn">Stop</button>)}
-      <button className="btn btn-close">X</button>
+      { status !== 'off' && (<button className="btn" onClick={stopTimer}>Stop</button>)}
+      <button className="btn btn-close" onClick={closeApp}>X</button>
     </div>
   )
   
